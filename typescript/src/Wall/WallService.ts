@@ -1,14 +1,14 @@
-import {Brick} from './Brick';
-import {WallDAO} from './WallDAO';
-import {UsersAreNotFriendsError} from '../Error/UsersAreNotFriendsError';
-import {UserNotLoggedInError} from '../Error/UserNotLoggedInError';
-import {User} from '../User/User';
-import {UserSession} from '../User/UserSession';
+import { Brick } from './Brick';
+import { WallDAO } from './WallDAO';
+import { UsersAreNotFriendsError } from '../Error/UsersAreNotFriendsError';
+import { UserNotLoggedInError } from '../Error/UserNotLoggedInError';
+import { User } from '../User/User';
+import { UserSession } from '../User/UserSession';
 
 export class WallService {
     anotherBrickInTheWall(user: User, message: string): Brick[] {
         let wall: Brick[] = [];
-        const loggedUser = UserSession.getInstance().getLoggedUser();
+        const loggedUser = this.getLoggedUser()
         let isFriend: boolean = false;
 
         if (loggedUser !== undefined) {
@@ -32,5 +32,9 @@ export class WallService {
         } else {
             throw new UserNotLoggedInError();
         }
+    }
+
+    getLoggedUser(): User | undefined {
+        return UserSession.getInstance().getLoggedUser();
     }
 }
